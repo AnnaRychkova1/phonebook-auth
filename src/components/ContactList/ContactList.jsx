@@ -4,9 +4,14 @@ import {
   selectError,
   selectFilteredContacts,
   selectIsLoading,
-} from '../../redux/contactsSlice';
-import Contact from '../Contact/Contact';
+} from '../../redux/contacts/selectors';
+// import {
+//   selectError,
+//   selectFilteredContacts,
+//   selectIsLoading,
+// } from '../../redux/contacts/slice';
 import css from './ContactList.module.css';
+import Contact from '../Contact/Contact';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';
 
