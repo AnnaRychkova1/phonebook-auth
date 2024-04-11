@@ -46,10 +46,9 @@
   border-radius: 8px;
   border: 2px solid var(--second-color);
   background-color: var(--primary-color);
-  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .errorMessage {
-  color: red;
+  color: var(--accent-color);
   font-size: 14px;
 }

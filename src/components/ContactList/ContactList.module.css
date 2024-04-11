@@ -17,16 +17,15 @@
   }
 }
 
-@media only screen and (min-width: 826px) {
-  .contactList {
-    margin-top: 72px;
-  }
-}
-
 .contactItem {
   border-radius: 8px;
   border: 2px solid var(--primary-color);
   padding: 16px;
   max-width: 380px;
   min-width: 320px;
+}
+
+.noContactsMess {
+  text-align: center;
+  font-size: 18px;
 }

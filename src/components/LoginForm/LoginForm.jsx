@@ -1,7 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { FaSignInAlt } from 'react-icons/fa';
 
 import css from './LoginForm.module.css';
+import { apiLoginUser } from '../../redux/auth/operations';
 
 const UserRegisterSchema = Yup.object().shape({
   email: Yup.string()
@@ -17,7 +20,12 @@ const INITIAL_FORM_DATA = {
   password: '',
 };
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
+
+  const onLogin = formData => {
+    dispatch(apiLoginUser(formData));
+  };
   const handleSubmit = (data, formActions) => {
     onLogin(data);
     formActions.resetForm();
@@ -36,7 +44,7 @@ const LoginForm = ({ onLogin }) => {
           <span className={css.labelText}>Email:</span>
           <Field
             className={css.formInput}
-            placeholder="alex@patron.com"
+            placeholder="YourEmail@gmail.com"
             type="text"
             name="email"
           />
@@ -64,10 +72,11 @@ const LoginForm = ({ onLogin }) => {
         <button
           className={css.submitBtn}
           type="submit"
-          title="Click to register user"
-          aria-label="Add new mailbox"
+          title="Click to login user"
+          aria-label="Login button"
         >
-          Sign In 😜
+          Sign In
+          <FaSignInAlt size={24} color="#261605" />
         </button>
       </Form>
     </Formik>

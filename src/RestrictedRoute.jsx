@@ -6,8 +6,10 @@ import { useAuth } from './hooks';
  * - Otherwise render the component
  */
 
-export const RestrictedRoute = ({ component: Component, redirectTo = '/' }) => {
+const RestrictedRoute = ({ component: Component, redirectTo = '/' }) => {
   const { isLoggedIn } = useAuth();
 
   return isLoggedIn ? <Navigate to={redirectTo} /> : Component;
 };
+
+export { RestrictedRoute };

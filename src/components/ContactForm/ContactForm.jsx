@@ -2,9 +2,10 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { nanoid } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 
 import css from './ContactForm.module.css';
-import { addContact } from '../../redux/contacts/operations';
+import { apiAddUserContact } from '../../redux/contacts/operations';
 
 const ContactsBoxSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,12 +35,12 @@ const ContactForm = () => {
       ...contactData,
       id: nanoid(),
     };
-    dispatch(addContact(contactFinalData));
+    dispatch(apiAddUserContact(contactFinalData));
   };
 
   const handleSubmit = (values, actions) => {
     onAddContacts(values);
-    console.log(values);
+    toast.success('Contact was added successfully');
     actions.resetForm();
   };
 

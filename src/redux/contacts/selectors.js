@@ -1,21 +1,27 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { selectNameFilter } from '../filters/selectors';
 
-const selectContacts = state => state.contacts.items;
+const selectPhonebookIsLoading = state => state.phonebook.isLoading;
+const selectPhonebookIsError = state => state.phonebook.isError;
+const selectPhonebookContacts = state => state.phonebook.contacts;
 
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, filter) => {
+const selectFilteredContacts = createSelector(
+  [selectPhonebookContacts, selectNameFilter],
+  (phonebook, filter) => {
     if (filter.length > 0) {
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.trim().toLowerCase())
+      return phonebook.filter(
+        contact =>
+          contact.name.toLowerCase().includes(filter.trim().toLowerCase()) ||
+          contact.number.includes(filter.trim())
       );
     } else {
-      return contacts;
+      return phonebook;
     }
   }
 );
 
-export const selectIsLoading = state => state.contacts.loading;
-
-export const selectError = state => state.contacts.error;
+export {
+  selectPhonebookIsLoading,
+  selectPhonebookIsError,
+  selectFilteredContacts,
+};

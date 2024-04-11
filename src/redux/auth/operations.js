@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  setToken,
   clearToken,
   requestGetCurrentUser,
   requestLogOut,
   requestSignIn,
   requestSignUp,
-  setToken,
 } from '../../services/userApi';
 
-export const apiRegisterUser = createAsyncThunk(
+const apiRegisterUser = createAsyncThunk(
   'auth/register',
   async (formData, thunkAPI) => {
     try {
@@ -21,7 +21,7 @@ export const apiRegisterUser = createAsyncThunk(
   }
 );
 
-export const apiLoginUser = createAsyncThunk(
+const apiLoginUser = createAsyncThunk(
   'auth/login',
   async (formData, thunkAPI) => {
     try {
@@ -34,36 +34,40 @@ export const apiLoginUser = createAsyncThunk(
   }
 );
 
-export const apiRefreshUser = createAsyncThunk(
+const apiLogoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    await requestLogOut();
+    clearToken();
+    return;
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.message);
+  }
+});
+
+const apiRefreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
-    if (token === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
 
     setToken(token);
     try {
       const data = await requestGetCurrentUser();
-      console.log('data: ', data);
 
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) return false;
+      return true;
+    },
   }
 );
 
-export const apiLogOutUser = createAsyncThunk(
-  'auth/logout',
-  async (_, thunkAPI) => {
-    clearToken();
-    try {
-      const data = await requestLogOut();
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+export { apiLoginUser, apiLogoutUser, apiRegisterUser, apiRefreshUser };

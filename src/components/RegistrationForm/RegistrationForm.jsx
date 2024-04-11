@@ -1,9 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 
 import { IoPersonAddSharp } from 'react-icons/io5';
 
 import css from './RegistrationForm.module.css';
+import { apiRegisterUser } from '../../redux/auth/operations';
 
 const UserRegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -24,7 +26,12 @@ const INITIAL_FORM_DATA = {
   password: '',
 };
 
-const RegisterForm = ({ onRegister }) => {
+const RegisterForm = () => {
+  const dispatch = useDispatch();
+
+  const onRegister = formData => {
+    dispatch(apiRegisterUser(formData));
+  };
   const handleSubmit = (data, formActions) => {
     onRegister(data);
     formActions.resetForm();
@@ -82,9 +89,9 @@ const RegisterForm = ({ onRegister }) => {
           className={css.submitBtn}
           type="submit"
           title="Click to register user"
-          aria-label="Add new mailbox"
+          aria-label="Register button"
         >
-          SIgn Up <IoPersonAddSharp />
+          SIgn Up <IoPersonAddSharp size={18} color="#261605" />
         </button>
       </Form>
     </Formik>

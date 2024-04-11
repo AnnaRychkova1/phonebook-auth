@@ -1,37 +1,69 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { addContact, deleteContact, fetchContacts } from './operations';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  apiAddUserContact,
+  apiDeleteUserContact,
+  apiEditUserContact,
+  apiGetUserContacts,
+} from './operations';
 
-const contactsSlice = createSlice({
-  name: 'contacts',
-  initialState: {
-    items: [],
-    loading: false,
-    error: null,
-  },
-  extraReducers: builder => {
+const INITIAL_STATE = {
+  contacts: null,
+  isLoading: false,
+  isError: false,
+};
+
+const phonebookSlice = createSlice({
+  name: 'phonebook',
+  initialState: INITIAL_STATE,
+  extraReducers: builder =>
     builder
-      .addCase(fetchContacts.pending, state => {
-        state.loading = true;
-        state.error = null;
+      .addCase(apiGetUserContacts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.contacts = action.payload;
       })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.items = action.payload;
+      .addCase(apiAddUserContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.contacts.push(action.payload);
       })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+      .addCase(apiDeleteUserContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== action.payload.id
+        );
+      })
+      .addCase(apiEditUserContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        const index = state.contacts.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        state.contacts[index] = action.payload;
       })
 
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-      })
-      .addCase(deleteContact.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          contact => contact.id !== action.payload
-        );
-      });
-  },
+      .addMatcher(
+        isAnyOf(
+          apiGetUserContacts.pending,
+          apiAddUserContact.pending,
+          apiDeleteUserContact.pending,
+          apiEditUserContact.pending
+        ),
+        state => {
+          state.isLoading = true;
+          state.isError = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          apiGetUserContacts.rejected,
+          apiAddUserContact.rejected,
+          apiDeleteUserContact.rejected,
+          apiEditUserContact.rejected
+        ),
+        state => {
+          state.isLoading = false;
+          state.isError = true;
+        }
+      ),
 });
 
-export const contactsReducer = contactsSlice.reducer;
+export const phonebookReducer = phonebookSlice.reducer;

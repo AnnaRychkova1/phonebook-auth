@@ -1,5 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { apiLoginUser, apiRefreshUser, apiRegisterUser } from './operations';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  apiLogoutUser,
+  apiLoginUser,
+  apiRefreshUser,
+  apiRegisterUser,
+} from './operations';
 
 const INITIAL_STATE = {
   userData: null,
@@ -15,25 +20,11 @@ const authSlice = createSlice({
   initialState: INITIAL_STATE,
   extraReducers: builder =>
     builder
-      //   REGISTER
-      .addCase(apiRegisterUser.pending, state => {
-        state.isLoading = true;
-        state.isError = false;
-      })
       .addCase(apiRegisterUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload.user;
         state.token = action.payload.token;
         state.isSignedIn = true;
-      })
-      .addCase(apiRegisterUser.rejected, state => {
-        state.isLoading = false;
-        state.isError = true;
-      })
-      //   LOGIN
-      .addCase(apiLoginUser.pending, state => {
-        state.isLoading = true;
-        state.isError = false;
       })
       .addCase(apiLoginUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -41,11 +32,9 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isSignedIn = true;
       })
-      .addCase(apiLoginUser.rejected, state => {
-        state.isLoading = false;
-        state.isError = true;
+      .addCase(apiLogoutUser.fulfilled, () => {
+        return INITIAL_STATE;
       })
-      //   REFRESH
       .addCase(apiRefreshUser.pending, state => {
         state.isRefreshing = true;
         state.isError = false;
@@ -58,7 +47,29 @@ const authSlice = createSlice({
       .addCase(apiRefreshUser.rejected, state => {
         state.isRefreshing = false;
         state.isError = true;
-      }),
+      })
+      .addMatcher(
+        isAnyOf(
+          apiRegisterUser.pending,
+          apiLoginUser.pending,
+          apiLogoutUser.pending
+        ),
+        state => {
+          state.isLoading = true;
+          state.isError = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          apiRegisterUser.rejected,
+          apiLoginUser.rejected,
+          apiLogoutUser.rejected
+        ),
+        state => {
+          state.isLoading = false;
+          state.isError = true;
+        }
+      ),
 });
 
 export const authReducer = authSlice.reducer;
