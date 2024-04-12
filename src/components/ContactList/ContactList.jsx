@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { FcContacts } from 'react-icons/fc';
 
+import css from './ContactList.module.css';
 import {
   selectFilteredContacts,
   selectPhonebookIsError,
   selectPhonebookIsLoading,
 } from '../../redux/contacts/selectors';
 import { apiGetUserContacts } from '../../redux/contacts/operations';
-import css from './ContactList.module.css';
 import Contact from '../Contact/Contact';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';

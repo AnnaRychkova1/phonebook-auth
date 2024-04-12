@@ -1,8 +1,10 @@
+import { Helmet } from 'react-helmet-async';
+
+import css from './Contacts.module.css';
+
 import ContactList from '../../components/ContactList/ContactList';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import SearchBox from '../../components/SearchBox/SearchBox';
-import css from './Contacts.module.css';
-import { Helmet } from 'react-helmet-async';
 
 const Contacts = () => {
   return (

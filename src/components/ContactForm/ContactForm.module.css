@@ -8,9 +8,15 @@
 
 @media only screen and (min-width: 386px) {
   .contactForm {
+    width: 380px;
     min-width: auto;
     max-width: 100%;
-    width: 380px;
+  }
+}
+@media only screen and (max-width: 462px) {
+  .contactForm {
+    max-width: 380px;
+    width: 100%;
   }
 }
 

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 
 import {
   requestAddContact,
@@ -14,6 +15,7 @@ const apiGetUserContacts = createAsyncThunk(
       const data = await requestGetContacts();
       return data;
     } catch (err) {
+      toast.error('We are experiencing server issues. Please try again later.');
       return thunkAPI.rejectWithValue(err.message);
     }
   }
@@ -26,6 +28,7 @@ const apiAddUserContact = createAsyncThunk(
       const data = await requestAddContact(formData);
       return data;
     } catch (err) {
+      toast.error('We are experiencing server issues. Please try again later.');
       return thunkAPI.rejectWithValue(err.message);
     }
   }
@@ -38,12 +41,11 @@ const apiDeleteUserContact = createAsyncThunk(
       const data = await requestDeleteContact(contactId);
       return data;
     } catch (err) {
+      toast.error('We are experiencing server issues. Please try again later.');
       return thunkAPI.rejectWithValue(err.message);
     }
   }
 );
-
-// TODO
 
 const apiEditUserContact = createAsyncThunk(
   'phonebook/edit',
@@ -52,6 +54,7 @@ const apiEditUserContact = createAsyncThunk(
       const data = await requestEditContact(editedContact);
       return data;
     } catch (err) {
+      toast.error('We are experiencing server issues. Please try again later.');
       return thunkAPI.rejectWithValue(err.message);
     }
   }

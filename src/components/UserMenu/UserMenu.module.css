@@ -10,6 +10,7 @@
   font-weight: 500;
   color: var(--accent-color);
   text-shadow: 2px 2px 4px rgba(7, 5, 3, 0.3);
+  text-align: center;
 }
 
 .logoutBtn {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import css from './NotFoundPage.module.css';
 import { Helmet } from 'react-helmet-async';
+
+import css from './NotFoundPage.module.css';
 
 const NotFoundPage = () => {
   return (

@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Modal from 'react-modal';
 
+import Loader from './components/Loader/Loader';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { Layout } from './Layout';
 import { useAuth } from './hooks';
 import { apiRefreshUser } from './redux/auth/operations';
-import Loader from './components/Loader/Loader';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Registration = lazy(() => import('./pages/Registration/Registration'));

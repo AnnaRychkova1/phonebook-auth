@@ -13,28 +13,26 @@ const clearToken = () => {
 };
 
 const requestSignUp = async formData => {
+  console.log(formData);
   const { data } = await instance.post('/users/signup', formData);
   setToken(data.token);
-
+  console.log(data);
   return data;
 };
 
 const requestSignIn = async formData => {
   const { data } = await instance.post('/users/login', formData);
   setToken(data.token);
-
   return data;
 };
 
 const requestLogOut = async () => {
   const { data } = await instance.post('/users/logout');
-
   return data;
 };
 
 const requestGetCurrentUser = async () => {
   const { data } = await instance.get('/users/current');
-
   return data;
 };
 

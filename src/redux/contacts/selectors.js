@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+
 import { selectNameFilter } from '../filters/selectors';
 
 const selectPhonebookIsLoading = state => state.phonebook.isLoading;

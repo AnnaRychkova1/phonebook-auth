@@ -1,14 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import Modal from 'react-modal';
+import { toast } from 'react-hot-toast';
 import { FaPhone } from 'react-icons/fa6';
 import { IoPersonSharp } from 'react-icons/io5';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { IoClose } from 'react-icons/io5';
-import Modal from 'react-modal';
-import { toast } from 'react-hot-toast';
 
 import css from './Contact.module.css';
+
 import {
   apiDeleteUserContact,
   apiEditUserContact,
@@ -66,6 +67,7 @@ const Contact = contact => {
           <span>{editedContact.number}</span>
         </p>
       </div>
+
       <div className={css.buttonContainer}>
         <button
           className={css.functionalButton}
