@@ -6,6 +6,7 @@ import {
   apiEditUserContact,
   apiGetUserContacts,
 } from './operations';
+import { apiLogoutUser } from '../auth/operations';
 
 const INITIAL_STATE = {
   contacts: null,
@@ -40,13 +41,17 @@ const phonebookSlice = createSlice({
         );
         state.contacts[index] = action.payload;
       })
+      .addCase(apiLogoutUser.fulfilled, () => {
+        return INITIAL_STATE;
+      })
 
       .addMatcher(
         isAnyOf(
           apiGetUserContacts.pending,
           apiAddUserContact.pending,
           apiDeleteUserContact.pending,
-          apiEditUserContact.pending
+          apiEditUserContact.pending,
+          apiLogoutUser.pending
         ),
         state => {
           state.isLoading = true;
@@ -58,7 +63,8 @@ const phonebookSlice = createSlice({
           apiGetUserContacts.rejected,
           apiAddUserContact.rejected,
           apiDeleteUserContact.rejected,
-          apiEditUserContact.rejected
+          apiEditUserContact.rejected,
+          apiLogoutUser.rejected
         ),
         state => {
           state.isLoading = false;

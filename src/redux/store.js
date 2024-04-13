@@ -21,13 +21,11 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
-const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
-
 const store = configureStore({
   reducer: {
     phonebook: phonebookReducer,
     filters: filtersReducer,
-    auth: persistedAuthReducer,
+    auth: persistReducer(authPersistConfig, authReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
