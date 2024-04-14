@@ -73,7 +73,7 @@ const Contact = contact => {
           className={css.functionalButton}
           title="Click to edit contact"
           aria-label="Editing contact"
-          type="submit"
+          type="button"
           onClick={openEditModal}
         >
           <RiEdit2Fill size={24} color="#ef5c0d" />
@@ -82,7 +82,7 @@ const Contact = contact => {
           className={css.functionalButton}
           title="Click to delete contact"
           aria-label="Deleting contact"
-          type="submit"
+          type="button"
           onClick={openModalDelete}
         >
           <RiDeleteBin2Fill size={24} color="#ef5c0d" />
@@ -94,7 +94,11 @@ const Contact = contact => {
         isOpen={isMadalEditOpen}
         onRequestClose={() => setIsModalEditOpen(false)}
       >
-        <button className={css.closeModalBtn} onClick={cancelEdit}>
+        <button
+          type="button"
+          className={css.closeModalBtn}
+          onClick={cancelEdit}
+        >
           <IoClose className={css.closeIcon} />
         </button>
         <h2>Edit Contact</h2>
@@ -124,7 +128,7 @@ const Contact = contact => {
           <button
             title="Click to save editet contact"
             aria-label="Save edited contact"
-            type="submit"
+            type="button"
             className={css.modalBtn}
             onClick={handleSave}
           >
@@ -133,7 +137,7 @@ const Contact = contact => {
           <button
             title="Click to cancel editing contact"
             aria-label="Cancel editing contact"
-            type="submit"
+            type="button"
             className={css.modalBtn}
             onClick={cancelEdit}
           >
@@ -147,7 +151,11 @@ const Contact = contact => {
         isOpen={isModalDeleteOpen}
         onRequestClose={() => setIsModalDeleteOpen(false)}
       >
-        <button className={css.closeModalBtn} onClick={cancelDelete}>
+        <button
+          type="button"
+          className={css.closeModalBtn}
+          onClick={cancelDelete}
+        >
           <IoClose className={css.closeIcon} />
         </button>
         <h2>Delete this contact?</h2>
@@ -167,7 +175,7 @@ const Contact = contact => {
           <button
             title="Click to delete contact"
             aria-label="Deleting contact"
-            type="submit"
+            type="button"
             className={css.modalBtn}
             onClick={confirmDelete}
           >
@@ -176,7 +184,7 @@ const Contact = contact => {
           <button
             title="Cancel delete"
             aria-label="Cancel delete"
-            type="submit"
+            type="button"
             className={css.modalBtn}
             onClick={cancelDelete}
           >
