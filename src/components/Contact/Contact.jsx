@@ -45,7 +45,7 @@ const Contact = contact => {
   }, [editedContact]);
 
   const confirmDelete = () => {
-    dispatch(apiDeleteUserContact(contact.id));
+    dispatch(apiDeleteUserContact(contact._id));
     toast.success('Contact was deleted successfully');
     setIsModalDeleteOpen(false);
   };

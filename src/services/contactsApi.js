@@ -8,7 +8,6 @@ const requestGetContacts = async () => {
 
 const requestAddContact = async formData => {
   const { data } = await instance.post('/contacts', formData);
-
   return data;
 };
 
@@ -19,7 +18,7 @@ const requestDeleteContact = async contactId => {
 };
 
 const requestEditContact = async editedContact => {
-  const { data } = await instance.patch(`/contacts/${editedContact.id}`, {
+  const { data } = await instance.patch(`/contacts/${editedContact._id}`, {
     name: editedContact.name,
     number: editedContact.number,
   });

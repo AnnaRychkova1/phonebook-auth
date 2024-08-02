@@ -15,7 +15,6 @@ const apiRegisterUser = createAsyncThunk(
   async (formData, thunkAPI) => {
     try {
       const data = await requestSignUp(formData);
-      console.log(data);
       return data;
     } catch (err) {
       console.log('not valid email or password');

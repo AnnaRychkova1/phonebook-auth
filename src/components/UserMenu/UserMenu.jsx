@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
 import css from './UserMenu.module.css';
 
@@ -8,6 +9,10 @@ import { apiLogoutUser } from '../../redux/auth/operations';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
+  const handleLogout = () => {
+    dispatch(apiLogoutUser());
+    toast.success('Successfully logged out');
+  };
 
   return (
     <div className={css.userMenu}>
@@ -15,7 +20,7 @@ export const UserMenu = () => {
       <button
         className={css.logoutBtn}
         type="button"
-        onClick={() => dispatch(apiLogoutUser())}
+        onClick={() => handleLogout()}
       >
         Logout
       </button>

@@ -13,7 +13,7 @@ const UserRegisterSchema = Yup.object().shape({
     .email('Must be a valid email!'),
   password: Yup.string()
     .required('Password is required!')
-    .min(8, 'Password must be at least 8 characters!'),
+    .min(6, 'Password must be at least 6 characters!'),
 });
 
 const INITIAL_FORM_DATA = {

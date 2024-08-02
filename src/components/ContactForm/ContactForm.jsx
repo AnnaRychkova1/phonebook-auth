@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { nanoid } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
 
 import css from './ContactForm.module.css';
@@ -9,17 +8,16 @@ import { apiAddUserContact } from '../../redux/contacts/operations';
 
 const ContactsBoxSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Too short!')
-    .max(50, 'Too long!')
-    .required('Required!'),
+    .min(3, 'Name must be at least 3 characters long')
+    .max(50, 'Name must be at most 50 characters long')
+    .required('Name is a required field'),
   number: Yup.string()
-    // .matches(/^\d{3}-\d{2}-\d{2}$/, {
-    //   message: 'Invalid number',
-    //   excludeEmptyString: false,
-    // })
-    .min(3, 'Too short!')
-    .max(50, 'Too long!')
-    .required('Required!'),
+    .matches(/^[0-9\s\-()]{6,}$/, {
+      message:
+        'Phone number must be at least 6 characters long and can contain digits, spaces, hyphens, and parentheses',
+      excludeEmptyString: true,
+    })
+    .required('Phone number is a required field'),
 });
 
 const initialValues = {
@@ -33,7 +31,6 @@ const ContactForm = () => {
   const onAddContacts = contactData => {
     const contactFinalData = {
       ...contactData,
-      id: nanoid(),
     };
     dispatch(apiAddUserContact(contactFinalData));
   };
